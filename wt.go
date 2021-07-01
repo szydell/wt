@@ -24,7 +24,10 @@ func main() {
 	confFile := userHomeDir + "/.config/wt/config.yaml"
 	if _, err := os.Stat(confFile); os.IsNotExist(err) {
 		fmt.Printf("Configuration file %s not found. Creating.\n", confFile)
-		MkdirP(filepath.Dir(confFile))
+		confDir := filepath.Dir(confFile) + "/"
+		if _, err := os.Stat(confDir); os.IsNotExist(err) {
+			MkdirP(confDir)
+		}
 		CreateEmptyConfig(confFile)
 	}
 	fmt.Println("init")
